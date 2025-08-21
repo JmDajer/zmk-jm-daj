@@ -1,0 +1,2 @@
+config SHIELD_JM_DAJ
+    def_bool $(shields_list,jm_daj)

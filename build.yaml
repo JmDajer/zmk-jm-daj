@@ -4,4 +4,3 @@ shield: [ "jm_daj" ]
 include:
   - board: nrf52840dk_nrf52840
     shield: jm_daj
-    cmake-args: -DCONFIG_BUILD_OUTPUT_HEX=y

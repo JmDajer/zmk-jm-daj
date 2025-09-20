@@ -3,3 +3,18 @@ on: [push, pull_request, workflow_dispatch]
 jobs:
   build:
     uses: zmkfirmware/zmk/.github/workflows/build-user-config.yml@v0.3
+  
+  debug:
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+    - name: Download firmware
+      uses: actions/download-artifact@v4
+      with:
+        name: firmware
+    
+    - name: List downloaded files
+      run: |
+        echo "=== Downloaded firmware files ==="
+        find . -type f | grep -E "\.(hex|bin|uf2)$"
+        ls -la

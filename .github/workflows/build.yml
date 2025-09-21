@@ -28,6 +28,7 @@ jobs:
           west update
           west zephyr-export
           pip install -r zephyr/scripts/requirements.txt
+          ZEPHYR_BOARD_ROOT=${GITHUB_WORKSPACE}/zmk-jm-daj/boards \
           west build -b jm_daj -s app -- -DZMK_CONFIG=../zmk-jm-daj/config
 
       - name: Upload HEX artifact

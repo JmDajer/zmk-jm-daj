@@ -1,0 +1,11 @@
+file_format: "1"
+id: jm_daj
+name: JM_DAJ
+type: board
+arch: arm
+features:
+  - keys
+  - studio
+outputs:
+  - usb
+  - ble

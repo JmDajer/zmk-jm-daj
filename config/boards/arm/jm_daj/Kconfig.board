@@ -1,3 +1,3 @@
 config BOARD_JM_DAJ
-	bool "JM DAJ"
+	bool "JM_DAJ"
 	depends on SOC_NRF52840_QIAA

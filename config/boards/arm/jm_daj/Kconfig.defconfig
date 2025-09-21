@@ -1,6 +1,6 @@
 if BOARD_JM_DAJ
 
-config BOARD
+config ZMK_KEYBOARd_NAME
 	default "jm_daj"
 
 if USB_DEVICE_STACK

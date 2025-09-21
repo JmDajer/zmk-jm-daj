@@ -1,17 +1,17 @@
 /dts-v1/;
 #include <nordic/nrf52840_qiaa.dtsi>
+#include <dt-bindings/zmk/matrix_transfrom.h>
 
 / {
-    model = "JM-DAJ";
-    compatible = "nordic,nrf52840-dk-nrf52840";
+    model = "JM_DAJ";
+    compatible = "jm,daj";
+    
 
     chosen {
         zephyr,code-partition = &code_partition;
         zephyr,sram = &sram0;
         zephyr,flash = &flash0;
-        zephyr,console = &uart0;
         zmk,kscan = &kscan0;
-        zmk,matrix_transform = &default_transform;
     };
 
     default_transform: keymap_transform_0 {
@@ -29,31 +29,29 @@
 
     kscan0: kscan {
         compatible = "zmk,kscan-gpio-matrix";
-        label = "KSCAN";
+        wakeup-source;
 
         diode-direction = "col2row";
-        
         row-gpios
-            = <&gpio1 5 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>  // ROW 0 P1.05
-            , <&gpio1 4 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>  // ROW 1 P1.04
-            , <&gpio1 3 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>  // ROW 2 P1.03
-            , <&gpio1 2 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>  // ROW 3 P1.02
-            , <&gpio1 1 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>  // ROW 4 P1.01
+            = <&gpio1 5 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)> // ROW 0 P1.05
+            , <&gpio1 4 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)> // ROW 1 P1.04
+            , <&gpio1 3 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)> // ROW 2 P1.03
+            , <&gpio1 2 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)> // ROW 3 P1.02
+            , <&gpio1 1 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)> // ROW 4 P1.01
             ;
-
         col-gpios
-            = <&gpio0 27 GPIO_ACTIVE_HIGH>  // COLUMN 0  P0.27
-            , <&gpio0 26 GPIO_ACTIVE_HIGH>  // COLUMN 1  P0.26
-            , <&gpio0 2 GPIO_ACTIVE_HIGH>   // COLUMN 2  P0.02
-            , <&gpio1 15 GPIO_ACTIVE_HIGH>  // COLUMN 3  P1.15
-            , <&gpio1 14 GPIO_ACTIVE_HIGH>  // COLUMN 4  P1.14
-            , <&gpio1 13 GPIO_ACTIVE_HIGH>  // COLUMN 5  P1.13
-            , <&gpio1 12 GPIO_ACTIVE_HIGH>  // COLUMN 6  P1.12
-            , <&gpio1 11 GPIO_ACTIVE_HIGH>  // COLUMN 7  P1.11
-            , <&gpio1 10 GPIO_ACTIVE_HIGH>  // COLUMN 8  P1.10
-            , <&gpio1 8 GPIO_ACTIVE_HIGH>   // COLUMN 9  P1.08
-            , <&gpio1 7 GPIO_ACTIVE_HIGH>   // COLUMN 10 P1.07
-            , <&gpio1 6 GPIO_ACTIVE_HIGH>   // COLUMN 11 P1.06
+            = <&gpio0 27 GPIO_ACTIVE_HIGH> // COLUMN 0  P0.27
+            , <&gpio0 26 GPIO_ACTIVE_HIGH> // COLUMN 1  P0.26
+            , <&gpio0 2  GPIO_ACTIVE_HIGH> // COLUMN 2  P0.02
+            , <&gpio1 15 GPIO_ACTIVE_HIGH> // COLUMN 3  P1.15
+            , <&gpio1 14 GPIO_ACTIVE_HIGH> // COLUMN 4  P1.14
+            , <&gpio1 13 GPIO_ACTIVE_HIGH> // COLUMN 5  P1.13
+            , <&gpio1 12 GPIO_ACTIVE_HIGH> // COLUMN 6  P1.12
+            , <&gpio1 11 GPIO_ACTIVE_HIGH> // COLUMN 7  P1.11
+            , <&gpio1 10 GPIO_ACTIVE_HIGH> // COLUMN 8  P1.10
+            , <&gpio1 8  GPIO_ACTIVE_HIGH> // COLUMN 9  P1.08
+            , <&gpio1 7  GPIO_ACTIVE_HIGH> // COLUMN 10 P1.07
+            , <&gpio1 6  GPIO_ACTIVE_HIGH> // COLUMN 11 P1.06
             ;
     };
 };
@@ -74,14 +72,8 @@
     status = "okay";
 };
 
-&uart0 {
-    compatible = "nordic,nrf-uart";
-    current-speed = <115200>;
+zephyr_udc0: &usbd {
     status = "okay";
-    tx-pin = <6>;
-    rx-pin = <8>;
-    rts-pin = <5>;
-    cts-pin = <7>;
 };
 
 &flash0 {
@@ -90,30 +82,29 @@
         #address-cells = <1>;
         #size-cells = <1>;
 
-        boot_partition: partition@0 {
-            label = "mcuboot";
-            reg = <0x000000000 0x0000C000>;
-        };
-        slot0_partition: partition@c000 {
-            label = "image-0";
-            reg = <0x0000C000 0x00067000>;
-        };
-        slot1_partition: partition@73000 {
-            label = "image-1";
-            reg = <0x00073000 0x00067000>;
-        };
-        scratch_partition: partition@da000 {
-            label = "image-scratch";
-            reg = <0x000da000 0x0001e000>;
-        };
-        storage_partition: partition@f8000 {
-            label = "storage";
-            reg = <0x000f8000 0x00008000>;
+        sd_partition: partition@0 {
+            reg = <0x00000000 0x00001000>;
         };
 
-        code_partition: partition@0 {
-            label = "code_partition";
-            reg = <0x0000C000 0x00067000>;
+        code_partition: partition@1000 {
+            reg = <0x00001000 0x000d3000>;
+        };
+
+        /*
+         * The flash starting at 0x000d4000 and ending at
+         * 0x000f3fff is reserved for use by the application.
+         */
+
+        /*
+         * Storage partition will be used by FCB/LittleFS/NVS
+         * if enabled.
+         */
+        storage_partition: partition@d4000 {
+            reg = <0x000d4000 0x00020000>;
+        };
+
+        boot_partition: partition@f4000 {
+            reg = <0x000f4000 0x0000c000>;
         };
     };
 };

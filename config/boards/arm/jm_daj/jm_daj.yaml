@@ -1,0 +1,17 @@
+identifier: jm_daj
+name: JM DAJ
+type: mcu
+arch: arm
+toolchain:
+  - zephyr
+  - gnuarmemb
+  - xtools
+ram: 256
+flash: 1024
+supported:
+  - adc
+  - usb_device
+  - ble
+  - ieee802154
+  - pwm
+  - watchdog

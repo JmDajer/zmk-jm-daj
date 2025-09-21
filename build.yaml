@@ -1,6 +1,5 @@
----
-board: [ "nrf52840dk_nrf52840" ]
-shield: [ "jm_daj" ]
+# This file generates the GitHub Actions matrix
+# For more information see: https://zmk.dev/docs/user-setup#github-actions
+
 include:
-  - board: nrf52840dk_nrf52840
-    shield: jm_daj
+  - board: jm_daj

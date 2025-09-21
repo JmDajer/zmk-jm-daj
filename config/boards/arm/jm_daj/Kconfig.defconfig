@@ -1,0 +1,16 @@
+if BOARD_JM_DAJ
+
+config BOARD
+	default "jm_daj"
+
+if USB_DEVICE_STACK
+
+config USB_NRFX
+	default y
+
+endif # USB_DEVICE_STACK
+
+config BT_CTLR
+	default BT
+
+endif # BOARD_JM_DAJ

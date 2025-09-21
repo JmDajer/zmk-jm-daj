@@ -16,10 +16,11 @@
         zmk,physical-layout = &physical_layout_0;
     };
 
-    physical_layout_0: physical_layout_0 {
+    physical_layout0: physical_layout_0 {
         compatible = "zmk,physical-layout";
-        rows = <5>;
-        columns = <12>;
+        display-name = "Default Layout";
+        kscan = <&kscan0>;
+        transform = <&default_transform>;
     };
 
     default_transform: keymap_transform_0 {

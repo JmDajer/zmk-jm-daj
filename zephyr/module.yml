@@ -5,7 +5,7 @@ zephyr:
   cmake: .
   build:
     app: zmk/app
-    overlay: 
+    overlay:
       - boards/arm/jm_daj
       - boards/shields/jm_daj
     kconfig:

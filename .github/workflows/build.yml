@@ -1,26 +1,37 @@
 name: Build ZMK firmware
 on: [push, pull_request, workflow_dispatch]
+
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          path: zmk-jm-daj
+
+      - name: Clone ZMK
+        uses: actions/checkout@v4
+        with:
+          repository: zmkfirmware/zmk
+          path: zmk
+
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
           python-version: '3.11'
-      - name: Install west and dependencies
+
+      - name: Build firmware
         run: |
           pip install west
+          cd zmk
           west init -l app
           west update
           west zephyr-export
           pip install -r zephyr/scripts/requirements.txt
-      - name: Build firmware
-        run: |
           west build -b jm_daj -s app -- -DZMK_CONFIG=../zmk-jm-daj/config
+
       - name: Upload HEX artifact
         uses: actions/upload-artifact@v4
         with:
           name: jm_daj_hex
-          path: build/zephyr/zephyr.hex
+          path: zmk/build/zephyr/zephyr.hex

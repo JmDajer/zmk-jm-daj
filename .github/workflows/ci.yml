@@ -1,0 +1,12 @@
+name: CI
+
+on: [push, pull_request, workflow_dispatch]
+
+jobs:
+  build:
+    uses: ./.github/workflows/build.yml
+    with:
+      build_matrix_path: build.yaml
+      config_path: config
+      fallback_binary: hex
+      archive_name: firmware

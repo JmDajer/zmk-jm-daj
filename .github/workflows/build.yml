@@ -1,7 +1,7 @@
 name: Build JM_DAJ
+on: [push, pull_request, workflow_dispatch]
 
-on:
-  workflow_call:
+workflow_call:
     inputs:
       build_matrix_path:
         description: "Path to the build matrix file"

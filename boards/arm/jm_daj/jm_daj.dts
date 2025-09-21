@@ -13,7 +13,7 @@
         zephyr,flash = &flash0;
         zmk,kscan = &kscan0;
         zmk,keyboard-transform = &default_transform;
-        zmk,physical-layout = &physical_layout_0;
+        zmk,physical-layout = &physical_layout0;
     };
 
     physical_layout0: physical_layout_0 {

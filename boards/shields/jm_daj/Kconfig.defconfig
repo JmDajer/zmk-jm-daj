@@ -1,6 +1,0 @@
-if SHIELD_JM_DAJ
-
-config ZMK_KEYBOARD_NAME
-    default "jm_daj"
-
-endif

@@ -3,38 +3,3 @@ on: [push, pull_request, workflow_dispatch]
 jobs:
   build:
     uses: zmkfirmware/zmk/.github/workflows/build-user-config.yml@v0.3
-  
-  convert:
-    runs-on: ubuntu-latest
-    needs: build
-    steps:
-    - name: Download firmware
-      uses: actions/download-artifact@v4
-      with:
-        name: firmware
-    
-    - name: Install ARM toolchain
-      run: sudo apt-get update && sudo apt-get install -y gcc-arm-none-eabi
-    
-    - name: Convert BIN to HEX
-      run: |
-        # Convert with proper nRF52840 flash address (0x1000)
-        arm-none-eabi-objcopy \
-          -I binary \
-          -O ihex \
-          --change-addresses 0x1000 \
-          jm_daj-nrf52840dk_nrf52840-zmk.bin \
-          jm_daj-nrf52840dk_nrf52840-zmk.hex
-        
-        echo "=== Conversion complete ==="
-        ls -la *.hex *.bin
-        echo "=== File sizes ==="
-        wc -c *.hex *.bin
-    
-    - name: Upload firmware with HEX
-      uses: actions/upload-artifact@v4
-      with:
-        name: firmware-with-hex
-        path: |
-          *.hex
-          *.bin

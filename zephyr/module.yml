@@ -1,4 +1,8 @@
 name: zmk-keyboard-jm-daj
-build:
-  settings:
-    board_root: .
+type: module
+
+zephyr:
+  cmake: .
+  build: app
+  overlay: boards
+  kconfig: boards

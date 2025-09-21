@@ -3,3 +3,4 @@
 
 include:
   - board: jm_daj
+    shield: jm_daj

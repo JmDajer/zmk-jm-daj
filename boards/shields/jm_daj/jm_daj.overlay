@@ -1,3 +1,5 @@
+/dts-v1/;
+
 / {
     chosen {
         zmk,kscan = &kscan0;

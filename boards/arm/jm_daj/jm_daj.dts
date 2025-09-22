@@ -37,31 +37,30 @@
     };
 
     kscan0: kscan {
-        compatible = "zmk,kscan-gpio-matrix";
-        wakeup-source;
+       compatible = "zmk,kscan-gpio-matrix";
+       wakeup-source;
+       diode-direction = "col2row";
 
-        diode-direction = "col2row";
-        row-gpios
-            = <&gpio1 5 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)> // ROW 0 P1.05
-            , <&gpio1 4 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)> // ROW 1 P1.04
-            , <&gpio1 3 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)> // ROW 2 P1.03
-            , <&gpio1 2 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)> // ROW 3 P1.02
-            , <&gpio1 1 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)> // ROW 4 P1.01
-            ;
-        col-gpios
-            = <&gpio0 27 GPIO_ACTIVE_HIGH> // COLUMN 0  P0.27
-            , <&gpio0 26 GPIO_ACTIVE_HIGH> // COLUMN 1  P0.26
-            , <&gpio0 2  GPIO_ACTIVE_HIGH> // COLUMN 2  P0.02
-            , <&gpio1 15 GPIO_ACTIVE_HIGH> // COLUMN 3  P1.15
-            , <&gpio1 14 GPIO_ACTIVE_HIGH> // COLUMN 4  P1.14
-            , <&gpio1 13 GPIO_ACTIVE_HIGH> // COLUMN 5  P1.13
-            , <&gpio1 12 GPIO_ACTIVE_HIGH> // COLUMN 6  P1.12
-            , <&gpio1 11 GPIO_ACTIVE_HIGH> // COLUMN 7  P1.11
-            , <&gpio1 10 GPIO_ACTIVE_HIGH> // COLUMN 8  P1.10
-            , <&gpio1 8  GPIO_ACTIVE_HIGH> // COLUMN 9  P1.08
-            , <&gpio1 7  GPIO_ACTIVE_HIGH> // COLUMN 10 P1.07
-            , <&gpio1 6  GPIO_ACTIVE_HIGH> // COLUMN 11 P1.06
-            ;
+       row-gpios =
+           <&gpio1 5 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>, // ROW 0 P1.05
+           <&gpio1 4 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>, // ROW 1 P1.04
+           <&gpio1 3 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>, // ROW 2 P1.03
+           <&gpio1 2 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>, // ROW 3 P1.02
+           <&gpio1 1 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>; // ROW 4 P1.01
+
+       col-gpios =
+           <&gpio0 27 GPIO_ACTIVE_LOW>, // COL 0 P0.27
+           <&gpio0 26 GPIO_ACTIVE_LOW>, // COL 1 P0.26
+           <&gpio0 2 GPIO_ACTIVE_LOW>, // COL 2 P0.02
+           <&gpio1 15 GPIO_ACTIVE_LOW>, // COL 3 P1.15
+           <&gpio1 14 GPIO_ACTIVE_LOW>, // COL 4 P1.14
+           <&gpio1 13 GPIO_ACTIVE_LOW>, // COL 5 P1.13
+           <&gpio1 12 GPIO_ACTIVE_LOW>, // COL 6 P1.12
+           <&gpio1 11 GPIO_ACTIVE_LOW>, // COL 7 P1.11
+           <&gpio1 10 GPIO_ACTIVE_LOW>, // COL 8 P1.10
+           <&gpio1 8 GPIO_ACTIVE_LOW>, // COL 9 P1.08
+           <&gpio1 7 GPIO_ACTIVE_LOW>, // COL 10 P1.07
+           <&gpio1 6 GPIO_ACTIVE_LOW>; // COL 11 P1.06
     };
 };
 

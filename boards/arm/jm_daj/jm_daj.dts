@@ -5,7 +5,23 @@
 / {
     model = "JM_DAJ";
     compatible = "jm,daj";
-    
+
+    leds {
+        compatible = "gpio-leds";
+        led0: led_0 {
+            gpios = <&gpio0 13 GPIO_ACTIVE_LOW>;
+            label = "Green LED 0";
+        };
+        led1: led_1 {
+            gpios = <&gpio0 14 GPIO_ACTIVE_LOW>;
+            label = "Green LED 1";
+        };
+    };
+
+    aliases {
+        led0 = &led0;
+        led1 = &led1;
+    };
 
     chosen {
         zephyr,code-partition = &code_partition;
@@ -79,6 +95,13 @@
 
 &gpio1 {
     status = "okay";
+};
+
+&uart0 {
+    status = "okay";
+    compatible = "nordic,nrf-uarte";
+    tx-pin = <6>;
+    rx-pin = <8>;
 };
 
 &usbd {

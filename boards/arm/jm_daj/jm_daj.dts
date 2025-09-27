@@ -111,12 +111,8 @@
         #address-cells = <1>;
         #size-cells = <1>;
 
-        boot_partition: partition@0 {
-            reg = <0x00000000 0x0000c000>;
-        };
-
-        code_partition: partition@c000 {
-            reg = <0x0000c000 0x000c8000>;
+        code_partition: partition@0 {
+            reg = <0x00000000 0x000d4000>;
         };
 
         /*

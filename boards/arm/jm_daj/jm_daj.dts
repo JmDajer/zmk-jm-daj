@@ -28,9 +28,14 @@
         zephyr,code-partition = &code_partition;
         zephyr,sram = &sram0;
         zephyr,flash = &flash0;
-        zmk,kscan = &kscan0;
-        zmk,keyboard-transform = &default_transform;
-        zmk,physical-layout = &physical_layout0;
+        zmk,kscan = &kscan_dummy;
+    };
+
+    /* Dummy kscan for testing BLE/USB without keyboard */
+    kscan_dummy: kscan_dummy {
+        compatible = "zmk,kscan-gpio-direct";
+        wakeup-source;
+        input-gpios = <&gpio0 13 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>; /* Single safe pin */
     };
 
     physical_layout0: physical_layout_0 {
@@ -53,8 +58,9 @@
         >;
     };
 
-    kscan0: kscan {
+    kscan0_disabled: kscan_disabled {
        compatible = "zmk,kscan-gpio-matrix";
+       status = "disabled";
        wakeup-source;
        diode-direction = "col2row";
 

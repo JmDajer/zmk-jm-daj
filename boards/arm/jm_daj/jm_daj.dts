@@ -28,14 +28,9 @@
         zephyr,code-partition = &code_partition;
         zephyr,sram = &sram0;
         zephyr,flash = &flash0;
-        zmk,kscan = &kscan_dummy;
-    };
-
-    /* Dummy kscan for testing BLE/USB without keyboard */
-    kscan_dummy: kscan_dummy {
-        compatible = "zmk,kscan-gpio-direct";
-        wakeup-source;
-        input-gpios = <&gpio0 13 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>; /* Single safe pin */
+        zmk,kscan = &kscan0;
+        zmk,keyboard-transform = &default_transform;
+        zmk,physical-layout = &physical_layout0;
     };
 
     physical_layout0: physical_layout_0 {
@@ -58,9 +53,8 @@
         >;
     };
 
-    kscan0_disabled: kscan_disabled {
+    kscan0: kscan {
        compatible = "zmk,kscan-gpio-matrix";
-       status = "disabled";
        wakeup-source;
        diode-direction = "col2row";
 
@@ -72,9 +66,9 @@
            <&gpio1 1 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>; // ROW 4 P1.01
 
        col-gpios =
-           <&gpio0 27 GPIO_ACTIVE_HIGH>, // COL 0 P0.27
-           <&gpio0 26 GPIO_ACTIVE_HIGH>, // COL 1 P0.26
-           <&gpio0 2 GPIO_ACTIVE_HIGH>, // COL 2 P0.02
+           <&gpio0 3 GPIO_ACTIVE_HIGH>, // COL 0 P0.03 (safe pin)
+           <&gpio0 4 GPIO_ACTIVE_HIGH>, // COL 1 P0.04 (safe pin)
+           <&gpio0 28 GPIO_ACTIVE_HIGH>, // COL 2 P0.28 (safe pin)
            <&gpio1 15 GPIO_ACTIVE_HIGH>, // COL 3 P1.15
            <&gpio1 14 GPIO_ACTIVE_HIGH>, // COL 4 P1.14
            <&gpio1 13 GPIO_ACTIVE_HIGH>, // COL 5 P1.13
